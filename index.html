@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RWA Rosters</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#07080b;color:#f5f5f5;font-family:Inter,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(7,8,11,.94);backdrop-filter:blur(12px);border-bottom:1px solid #252831}
+nav{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:16px 20px}.brand{font-weight:950;letter-spacing:3px}.brand span{color:#e3262e}
+nav a{color:#aaa;text-decoration:none;margin-left:20px;font-size:13px;font-weight:800}nav a:hover{color:white}
+.hero{max-width:1200px;margin:auto;padding:70px 20px 45px}.eyebrow{letter-spacing:4px;color:#888;font-size:12px;font-weight:800}.hero h1{font-size:clamp(42px,7vw,76px);line-height:.9;margin:12px 0;font-weight:1000}.hero p{color:#999;max-width:600px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.btn{border:0;border-radius:9px;padding:13px 18px;font-weight:900;cursor:pointer;background:#242731;color:#fff}.btn.red{background:#e3262e}.btn:hover{filter:brightness(1.12)}
+.wrap{max-width:1200px;margin:auto;padding:0 20px 70px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#111319;border:1px solid #252831;border-radius:18px;overflow:hidden;height:430px;display:flex;flex-direction:column}.head{padding:22px}.head h2{margin:0;font-size:27px}.head small{opacity:.75}.rage .head{background:linear-gradient(135deg,#8d0c13,#e3262e)}.lightning .head{background:linear-gradient(135deg,#075b99,#2998e8)}.rxt .head{background:linear-gradient(135deg,#4c515a,#8d929b)}
+.list{padding:12px;overflow-y:auto;flex:1;min-height:0;scrollbar-width:thin}.w{padding:13px 10px;border-bottom:1px solid #242731}.w:last-child{border:0}.w strong{display:block}.w em{display:block;color:#8f95a0;font-size:11px;font-style:normal;margin-top:3px}.champion-badge{color:#d8b45a!important;font-weight:900}.empty{text-align:center;color:#777;padding:45px 10px}
+.history{max-width:1200px;margin:0 auto;padding:15px 20px 80px}.history-title{text-align:center;margin:20px 0 35px}.history-title h2{font-size:36px;margin:0 0 8px}.history-title p{color:#888;margin:0}.brand-history{margin-bottom:45px}.brand-history>h3{font-size:30px;margin:0 0 18px}.champ-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.champ-card{background:#111319;border:1px solid #252831;border-radius:16px;overflow:hidden}.champ-head{padding:17px 18px;background:#171a21;border-bottom:1px solid #252831}.champ-head h4{margin:0;font-size:17px}.champ-head small{color:#858b96}.champ-list{padding:8px 16px 12px}.champion{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:12px 2px;border-bottom:1px solid #242731}.champion:last-child{border:0}.champion-name{font-weight:850}.days{color:#9298a3;font-size:11px;white-space:nowrap}.history-empty{color:#777;text-align:center;padding:25px 8px;font-size:12px}
+section.title{max-width:1200px;margin:0 auto;padding:10px 20px 18px}section.title h2{font-size:26px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:20;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.box{width:min(520px,100%);background:#12141a;border:1px solid #30343e;border-radius:18px;padding:23px}.box h2{margin-top:0}label{font-size:12px;color:#a8adb7;font-weight:800}input,select{width:100%;padding:13px;margin:7px 0 15px;background:#08090d;color:#fff;border:1px solid #30343e;border-radius:9px}.close{float:right;background:none;border:0;color:#aaa;font-size:25px;cursor:pointer}.notice{color:#777;font-size:11px;margin-top:12px}.adminrow{display:flex;gap:8px;align-items:center;border-bottom:1px solid #292d36;padding:10px 0}.adminrow span{flex:1}.danger{background:#761d24}
+footer{border-top:1px solid #22252c;text-align:center;color:#666;padding:28px;font-size:11px}
+@media(max-width:800px){.grid,.champ-grid{grid-template-columns:1fr}nav .links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}nav a{margin-left:4px;font-size:10px;font-weight:900}.history-title h2{font-size:29px}}
+</style>
+</head>
+<body>
+<header><nav><div class="brand">RWA<span>.</span>ROSTERS</div><div class="links"><a href="#rosters">ROSTERS</a><a href="#history">CHAMPIONSHIP HISTORY</a><a href="#" onclick="adminOpen();return false;">STAFF / ADMIN</a></div></nav></header>
+<main>
+<div class="hero"><div class="eyebrow">RUTHLESS WRESTLING ATTRACTION</div><h1>CURRENT<br>ROSTERS.</h1><p>The official RWA roster portal. Explore the stars of RAGE, LIGHTNING and RXT.</p><div class="actions"><button class="btn" onclick="document.getElementById('rosters').scrollIntoView({behavior:'smooth'})">VIEW ROSTERS</button></div></div>
+<section id="rosters" class="wrap"><div class="grid">
+<div class="card rage"><div class="head"><h2>🔴 RAGE</h2><small>Saturday • 4:00 PM EST</small></div><div id="rage" class="list"></div></div>
+<div class="card lightning"><div class="head"><h2>🔵 LIGHTNING</h2><small>Sunday • 4:00 PM EST</small></div><div id="lightning" class="list"></div></div>
+<div class="card rxt"><div class="head"><h2>⚪ RXT</h2><small>Wednesday • 5:00 PM EST</small></div><div id="rxt" class="list"></div></div>
+</div></section>
+</main>
+
+<section id="history" class="history">
+  <div class="history-title">
+    <h2>CHAMPIONSHIP HISTORY</h2>
+    <p>Every champion in RWA history.</p>
+  </div>
+
+  <div class="brand-history">
+    <h3>🔴 RAGE</h3>
+    <div class="champ-grid" id="history-rage"></div>
+  </div>
+
+  <div class="brand-history">
+    <h3>🔵 LIGHTNING</h3>
+    <div class="champ-grid" id="history-lightning"></div>
+  </div>
+
+  <div class="brand-history">
+    <h3>⚪ RXT</h3>
+    <div class="champ-grid" id="history-rxt"></div>
+  </div>
+</section>
+
+<footer>RWA ROSTERS • Ruthless Wrestling Attraction</footer>
+
+<div id="join" class="modal"><div class="box"><button class="close" onclick="closeAll()">×</button><h2>Join RWA</h2><label>BRAND</label><select id="jb"><option value="rage">🔴 RAGE</option><option value="lightning">🔵 LIGHTNING</option><option value="rxt">⚪ RXT</option></select><label>GIMMICK NAME</label><input id="jn" placeholder="JAMES ARTHUR"><label>DISCORD USERNAME</label><input id="jd" placeholder="@username"><button class="btn red" style="width:100%" onclick="join()">SUBMIT REQUEST</button><div class="notice">In the production version, requests should go to the RWA staff database for approval.</div></div></div>
+
+<div id="admin" class="modal"><div class="box" style="width:min(760px,100%);max-height:90vh;overflow:auto">
+<button class="close" onclick="closeAll()">×</button>
+<h2>RWA Staff / Admin</h2>
+<p style="color:#888;font-size:12px">Manage rosters and championship history. Production authentication should be server-side.</p>
+<label>STAFF PASSWORD</label><input id="pw" type="password" placeholder="Password"><button class="btn red" onclick="login()">LOGIN</button>
+
+<div id="panel" style="display:none;margin-top:18px">
+  <h3>ROSTER MANAGEMENT</h3>
+  <label>BRAND</label>
+  <select id="ab"><option value="rage">RAGE</option><option value="lightning">LIGHTNING</option><option value="rxt">RXT</option></select>
+  <input id="an" placeholder="Gimmick name">
+  <input id="ad" placeholder="Championship (optional)">
+  <button class="btn" onclick="add()">ADD WRESTLER</button>
+  <div id="alist" style="margin-top:12px"></div>
+
+  <hr style="border:0;border-top:1px solid #292d36;margin:25px 0">
+
+  <h3>CHAMPIONSHIP HISTORY</h3>
+  <label>BRAND</label>
+  <select id="cb" onchange="populateTitles()"><option value="rage">RAGE</option><option value="lightning">LIGHTNING</option><option value="rxt">RXT</option></select>
+  <label>CHAMPIONSHIP</label>
+  <select id="ct"></select>
+  <label>CHAMPION NAME</label>
+  <input id="cn" placeholder="Champion name">
+  <label>DAYS HELD</label>
+  <input id="cd" type="number" min="0" placeholder="145">
+  <button class="btn" onclick="addChampion()">ADD CHAMPION</button>
+  <div id="clist" style="margin-top:12px"></div>
+</div>
+</div></div>
+
+<script>
+const KEY="rwa-rosters";
+const HISTORY_KEY="rwa-championship-history";
+const PASS="CHANGE-ME";
+
+const titleConfig={
+  rage:[
+    ["world","RWA World Heavyweight Champions"],
+    ["women-world","RWA Women’s World Champions","Formerly RWA RAGE Women’s Champions"],
+    ["ic","RWA Intercontinental Champions"],
+    ["women-ic","RWA Women’s Intercontinental Champions"],
+    ["tag","RWA World Tag Team Champions","Formerly RWA RAGE Tag Team Champions"]
+  ],
+  lightning:[
+    ["undisputed","RWA Undisputed Champions"],
+    ["women","RWA Women’s Champions","Formerly RWA Lightning Women’s Champions"],
+    ["us","RWA United States Champions"],
+    ["women-us","RWA Women’s United States Champions"],
+    ["tag","RWA Tag Team Champions","Formerly RWA LIGHTNING Tag Team Champions"],
+    ["women-tag","RWA Women’s Tag Team Champions"]
+  ],
+  rxt:[
+    ["rxt","RXT Champions"],
+    ["women","RXT Women's Champions"],
+    ["na","RXT North American Champions"],
+    ["women-na","RXT Women's North American Champions"],
+    ["tag","RXT Tag Team Champions"]
+  ]
+};
+
+let d=JSON.parse(localStorage.getItem(KEY)||'{"rage":[],"lightning":[],"rxt":[]}');
+let h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'{"rage":{},"lightning":{},"rxt":{}}');
+d=['rage','lightning','rxt'].reduce((o,b)=>{
+  o[b]=(d[b]||[]).map(x=>({...x,championship:x.championship||''}));
+  return o;
+},{});
+
+for(const b of ["rage","lightning","rxt"]){
+  if(!d[b]) d[b]=[];
+  if(!h[b]) h[b]={};
+  titleConfig[b].forEach(t=>{if(!Array.isArray(h[b][t[0]]))h[b][t[0]]=[]});
+}
+
+function save(){localStorage.setItem(KEY,JSON.stringify(d));render()}
+function saveHistory(){localStorage.setItem(HISTORY_KEY,JSON.stringify(h));renderHistory();renderAdmin()}
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+function render(){
+  for(const b of ['rage','lightning','rxt']){
+    document.getElementById(b).innerHTML=d[b].length
+      ?d[b].map(x=>`<div class="w"><strong>${esc(x.name)}</strong>${x.championship?`<em class="champion-badge">${esc(x.championship)}</em>`:''}</div>`).join('')
+      :'<div class="empty">No wrestlers yet.</div>';
+  }
+  renderAdmin();
+  renderHistory();
+}
+
+function renderHistory(){
+  for(const b of ['rage','lightning','rxt']){
+    const el=document.getElementById('history-'+b);
+    if(!el)continue;
+    el.innerHTML=titleConfig[b].map(t=>{
+      const list=h[b][t[0]]||[];
+      return `<div class="champ-card">
+        <div class="champ-head"><h4>${esc(t[1])}</h4>${t[2]?`<small>${esc(t[2])}</small>`:''}</div>
+        <div class="champ-list">${list.length
+          ?list.map(x=>`<div class="champion"><span class="champion-name">${esc(x.name)}</span><span class="days">${Number(x.days)||0} days held</span></div>`).join('')
+          :'<div class="history-empty">No champions added yet.</div>'}
+        </div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function joinOpen(){document.getElementById('join').classList.add('show')}
+function adminOpen(){document.getElementById('admin').classList.add('show')}
+function closeAll(){document.querySelectorAll('.modal').forEach(x=>x.classList.remove('show'))}
+
+function join(){
+  let b=jb.value,n=jn.value.trim(),u=jd.value.trim();
+  if(!n)return alert('Enter a gimmick name.');
+  d[b].push({name:n,discord:u});
+  save();closeAll();alert('Request submitted in this prototype.');
+}
+
+function login(){
+  if(pw.value!==PASS)return alert('Incorrect password.');
+  document.getElementById('panel').style.display='block';
+  populateTitles();
+  renderAdmin();
+}
+
+function add(){
+  let b=ab.value,n=an.value.trim(),c=ad.value.trim();
+  if(!n)return alert('Enter a gimmick name.');
+  d[b].push({name:n,championship:c});
+  an.value='';ad.value='';
+  save();
+}
+
+function remove(b,i){
+  if(confirm('Remove '+d[b][i].name+'?')){
+    d[b].splice(i,1);
+    save();
+  }
+}
+
+function editRoster(b,i){
+  const current=d[b][i];
+  const name=prompt('Edit wrestler name:',current.name);
+  if(name===null)return;
+  const clean=name.trim();
+  if(!clean)return;
+  const championship=prompt('Edit championship:',current.championship||'');
+  d[b][i]={name:clean,championship:championship===null?(current.championship||''):championship.trim()};
+  save();
+}
+
+function renderAdmin(){
+  const el=document.getElementById('alist');
+  if(!el)return;
+  el.innerHTML=['rage','lightning','rxt'].flatMap(b=>d[b].map((x,i)=>
+    `<div class="adminrow"><span>${b.toUpperCase()} — ${esc(x.name)}${x.championship?` — ${esc(x.championship)}`:''}</span><button class="btn" onclick="editRoster('${b}',${i})">EDIT</button><button class="btn danger" onclick="remove('${b}',${i})">REMOVE</button></div>`
+  )).join('');
+  renderChampAdmin();
+}
+
+function populateTitles(){
+  const b=document.getElementById('cb').value;
+  const select=document.getElementById('ct');
+  select.innerHTML=titleConfig[b].map(t=>`<option value="${esc(t[0])}">${esc(t[1])}</option>`).join('');
+  renderChampAdmin();
+}
+
+function addChampion(){
+  const b=document.getElementById('cb').value;
+  const key=document.getElementById('ct').value;
+  const name=document.getElementById('cn').value.trim();
+  const days=parseInt(document.getElementById('cd').value,10);
+  if(!name)return alert('Enter a champion name.');
+  if(isNaN(days)||days<0)return alert('Enter valid days held.');
+  h[b][key].push({name,days});
+  document.getElementById('cn').value='';
+  document.getElementById('cd').value='';
+  saveHistory();
+}
+
+function removeChampion(b,key,i){
+  if(confirm('Remove '+h[b][key][i].name+' from championship history?')){
+    h[b][key].splice(i,1);
+    saveHistory();
+  }
+}
+
+function editChampion(b,key,i){
+  const current=h[b][key][i];
+  const name=prompt('Edit champion name:',current.name);
+  if(name===null)return;
+  const clean=name.trim();
+  if(!clean)return;
+  const daysInput=prompt('Edit days held:',String(current.days));
+  if(daysInput===null)return;
+  const days=parseInt(daysInput,10);
+  if(isNaN(days)||days<0)return alert('Invalid days.');
+  h[b][key][i]={name:clean,days};
+  saveHistory();
+}
+
+function renderChampAdmin(){
+  const el=document.getElementById('clist');
+  if(!el)return;
+  const b=document.getElementById('cb').value;
+  el.innerHTML=titleConfig[b].map(t=>{
+    const list=h[b][t[0]]||[];
+    return `<div style="margin:14px 0"><strong>${esc(t[1])}</strong>${
+      list.length
+      ?list.map((x,i)=>`<div class="adminrow"><span>${esc(x.name)} — ${Number(x.days)||0} days</span><button class="btn" onclick="editChampion('${b}','${t[0]}',${i})">EDIT</button><button class="btn danger" onclick="removeChampion('${b}','${t[0]}',${i})">REMOVE</button></div>`).join('')
+      :'<div class="notice">No champions added yet.</div>'
+    }</div>`;
+  }).join('');
+}
+
+render();
+</script>
+</body></html>
